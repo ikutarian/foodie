@@ -9,7 +9,7 @@ import java.util.Date;
 @TableName("users")
 @Getter
 @Setter
-public class User {
+public class User extends BaseEntity {
 
     /**
      * 主键id 用户id
@@ -60,14 +60,4 @@ public class User {
      * 生日 生日
      */
     private Date birthday;
-
-    /**
-     * 创建时间 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 更新时间 更新时间
-     */
-    private Date updatedTime;
 }
