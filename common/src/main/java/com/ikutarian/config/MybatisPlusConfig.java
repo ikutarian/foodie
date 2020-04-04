@@ -5,6 +5,9 @@ import com.ikutarian.util.DateTimeHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Mybatis-plus相关的配置
+ */
 @Configuration
 public class MybatisPlusConfig {
 
