@@ -1,8 +1,11 @@
 package com.ikutarian.controller;
 
+import com.ikutarian.pojo.User;
 import com.ikutarian.pojo.bo.UserBo;
 import com.ikutarian.service.UserService;
 import com.ikutarian.util.ApiResult;
+import com.ikutarian.util.CookieUtils;
+import com.ikutarian.util.JsonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Api(value = "注册登录", tags = {"用于注册登录相关的接口"})
 @RestController
@@ -40,7 +44,9 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("regist")
-    public ApiResult register(@RequestBody UserBo userBo) {
+    public ApiResult register(@RequestBody UserBo userBo,
+                              HttpServletRequest request,
+                              HttpServletResponse response) {
         String username = userBo.getUsername();
         String password = userBo.getPassword();
         String confirmPassword = userBo.getConfirmPassword();
@@ -59,7 +65,30 @@ public class PassportController {
             return ApiResult.error("两次密码输入不一致");
         }
 
-        userService.createUser(userBo);
+        User user = userService.createUser(userBo);
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objToJson(user), true);
+
         return ApiResult.ok();
+    }
+
+    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
+    @PostMapping("login")
+    public ApiResult login(@RequestBody UserBo userBo,
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
+        String username = userBo.getUsername();
+        String password = userBo.getPassword();
+
+        if (StringUtils.isAnyBlank(username, password)) {
+            return ApiResult.error("用户名或密码不能为空");
+        }
+
+        User user = userService.queryUserForLogin(username, password);
+        if (user == null) {
+            return ApiResult.error("用户名或密码不正确");
+        }
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objToJson(user), true);
+
+        return ApiResult.ok(user);
     }
 }

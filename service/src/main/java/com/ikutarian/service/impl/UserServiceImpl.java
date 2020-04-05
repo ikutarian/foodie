@@ -22,7 +22,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return user != null;
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public User createUser(UserBo userBo) {
         User user = new User();
@@ -31,5 +31,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         this.save(user);
 
         return user;
+    }
+
+    @Override
+    public User queryUserForLogin(String username, String password) {
+        return this.getOne(new LambdaQueryWrapper<User>()
+                .eq(User::getUsername, username)
+                .eq(User::getPassword, Md5Utils.getMd5Str(password)));
+
     }
 }

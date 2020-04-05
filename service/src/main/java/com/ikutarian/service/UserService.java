@@ -15,4 +15,9 @@ public interface UserService extends IService<User> {
      * 创建用户
      */
     User createUser(UserBo userBo);
+
+    /**
+     * 检测用户名和密码是否匹配，用于登录
+     */
+    User queryUserForLogin(String username, String password);
 }
