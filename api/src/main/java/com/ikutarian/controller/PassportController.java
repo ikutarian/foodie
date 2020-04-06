@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,5 +91,18 @@ public class PassportController {
         CookieUtils.setCookie(request, response, "user", JsonUtils.objToJson(user), true);
 
         return ApiResult.ok(user);
+    }
+
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")
+    @PostMapping("logout")
+    public ApiResult logout(@RequestParam String userId,
+                            HttpServletRequest request,
+                            HttpServletResponse response) {
+        // 清除Cookie
+        CookieUtils.deleteCookie(request, response, "user");
+        // TODO 清空购物车
+        // TODO 分布式会话中要清除用户数据
+
+        return ApiResult.ok();
     }
 }
