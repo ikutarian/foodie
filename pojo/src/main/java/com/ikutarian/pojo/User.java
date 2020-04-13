@@ -1,19 +1,21 @@
 package com.ikutarian.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-@TableName("users")
 @Getter
 @Setter
+@TableName("users")
 public class User extends BaseEntity {
 
     /**
      * 主键id 用户id
      */
+    @TableId
     private String id;
 
     /**
