@@ -3,12 +3,12 @@
 <mapper namespace="com.ikutarian.mapper.CategoryMapper">
 
     <resultMap id="myCategoryVo" type="com.ikutarian.pojo.vo.CategoryVo">
-        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="type" property="type"/>
         <result column="fatherId" property="fatherId"/>
         <collection property="subCategoryList" ofType="com.ikutarian.pojo.vo.SubCategoryVo">
-            <id column="subId" property="subId" jdbcType="INTEGER"/>
+            <id column="subId" property="subId"/>
             <result column="subName" property="subName"/>
             <result column="subType" property="subType"/>
             <result column="subFatherId" property="subFatherId"/>
@@ -34,4 +34,43 @@
         WHERE
             f.father_id = #{rootCatId}
     </select>
+
+    <resultMap id="myNewItemsVo" type="com.ikutarian.pojo.vo.NewItemsVo">
+        <id column="rootCatId" property="rootCatId"/>
+        <result column="rootCatName" property="rootCatName"/>
+        <result column="slogan" property="slogan"/>
+        <result column="catImage" property="catImage"/>
+        <result column="bgColor" property="bgColor"/>
+        <collection property="simpleItemList" ofType="com.ikutarian.pojo.vo.SimpleItemVo">
+            <id column="itemId" property="itemId"/>
+            <result column="itemName" property="itemName"/>
+            <result column="itemUrl" property="itemUrl"/>
+        </collection>
+    </resultMap>
+
+    <select id="getSixNewItemsLazy" parameterType="map" resultMap="myNewItemsVo">
+        SELECT
+            f.id AS rootCatId,
+            f.`name` AS rootCatName,
+            f.slogan AS slogan,
+            f.cat_image AS catImage,
+            f.bg_color AS bgColor,
+            i.id AS itemId,
+            i.item_name AS itemName,
+            ii.url AS itemUrl,
+            i.created_time AS createTime
+        FROM
+            category f
+        LEFT JOIN items i ON f.id = i.root_cat_id
+        LEFT JOIN items_img ii ON i.id = ii.item_id
+        WHERE
+            f.`type` = 1
+        AND
+            i.root_cat_id = #{paramsMap.rootCatId}
+        AND
+            ii.is_main = 1
+        ORDER BY
+            i.created_time DESC
+    </select>
+
 </mapper>

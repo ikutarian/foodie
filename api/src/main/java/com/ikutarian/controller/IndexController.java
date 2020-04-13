@@ -4,6 +4,7 @@ import com.ikutarian.enums.YesOrNo;
 import com.ikutarian.pojo.Carousel;
 import com.ikutarian.pojo.Category;
 import com.ikutarian.pojo.vo.CategoryVo;
+import com.ikutarian.pojo.vo.NewItemsVo;
 import com.ikutarian.pojo.vo.SubCategoryVo;
 import com.ikutarian.service.CarouselService;
 import com.ikutarian.service.CategoryService;
@@ -53,6 +54,19 @@ public class IndexController {
         }
 
         List<CategoryVo> list = categoryService.getSubCatList(rootCatId);
+        return ApiResult.ok(list);
+    }
+
+    @ApiOperation(value = "查询每个一级分类下的6条最新数据", notes = "查询每个一级分类下的6条最新数据", httpMethod = "GET")
+    @GetMapping("sixNewItems/{rootCatId}")
+    public ApiResult sixNewItems(
+            @ApiParam(name = "rootCatId", value = "一级分类的ID", required = true)
+            @PathVariable Integer rootCatId) {
+        if (rootCatId == null) {
+            return ApiResult.error("分类不存在");
+        }
+
+        List<NewItemsVo> list = categoryService.getSixNewItemsLazy(rootCatId);
         return ApiResult.ok(list);
     }
 }

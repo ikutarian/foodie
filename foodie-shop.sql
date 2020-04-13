@@ -28,8 +28,8 @@ CREATE TABLE `carousel` (
   `type` int(11) NOT NULL COMMENT '轮播图类型 轮播图类型，用于判断，可以根据商品id或者分类进行页面跳转，1：商品 2：分类',
   `sort` int(11) NOT NULL COMMENT '轮播图展示顺序',
   `is_show` int(11) NOT NULL COMMENT '是否展示',
-  `create_time` datetime NOT NULL COMMENT '创建时间 创建时间',
-  `update_time` datetime NOT NULL COMMENT '更新时间 更新',
+  `created_time` datetime NOT NULL COMMENT '创建时间 创建时间',
+  `updated_time` datetime NOT NULL COMMENT '更新时间 更新',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='轮播图 ';
 

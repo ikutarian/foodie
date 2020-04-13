@@ -2,9 +2,13 @@ package com.ikutarian.pojo;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 public class BaseEntity {
 
 
