@@ -5,6 +5,8 @@ import com.ikutarian.pojo.Item;
 import com.ikutarian.pojo.ItemImg;
 import com.ikutarian.pojo.ItemParam;
 import com.ikutarian.pojo.ItemSpec;
+import com.ikutarian.pojo.vo.CommentLevelCountVo;
+import com.ikutarian.util.PageGridResult;
 
 import java.util.List;
 
@@ -29,4 +31,14 @@ public interface ItemService extends IService<Item> {
      * 根据id查询商品的参数
      */
     ItemParam queryItemParam(String itemId);
+
+    /**
+     * 根据id查询商品评价数量
+     */
+    CommentLevelCountVo queryCommentCounts(String itemId);
+
+    /**
+     * 根据id查询商品评价（分页）
+     */
+    PageGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize);
 }

@@ -37,7 +37,7 @@ spring:
 #
 ############################################################
 mybatis-plus:
-  type-aliases-package: com.ikutarian.pojo # 所有POJO类所在包路径
+  type-aliases-package: com.ikutarian.pojo,com.ikutarian.pojo.vo # 所有POJO类所在包路径
   mapper-locations: classpath*:mapper/*.xml # mapper映射文件
   global-config:
     db-config:
