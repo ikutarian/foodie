@@ -1,6 +1,6 @@
 package com.ikutarian.controller;
 
-import com.ikutarian.enums.constant.PageConstants;
+import com.ikutarian.constant.PageConstants;
 import com.ikutarian.pojo.Item;
 import com.ikutarian.pojo.ItemImg;
 import com.ikutarian.pojo.ItemParam;

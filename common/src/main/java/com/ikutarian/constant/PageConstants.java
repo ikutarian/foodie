@@ -1,4 +1,4 @@
-package com.ikutarian.enums.constant;
+package com.ikutarian.constant;
 
 public class PageConstants {
 
