@@ -15,4 +15,6 @@ public interface ItemMapper extends BaseMapper<Item> {
     IPage<ItemCommentVo> queryItemComments(Page<ItemCommentVo> page, @Param("paramsMap") Map<String, Object> map);
 
     IPage<SearchItemVo> searchItems(Page<SearchItemVo> page, @Param("paramsMap") Map<String, Object> map);
+
+    IPage<SearchItemVo> searchItemsByThirdCat(Page<SearchItemVo> page, @Param("paramsMap") Map<String, Object> map);
 }

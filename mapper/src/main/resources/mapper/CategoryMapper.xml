@@ -7,7 +7,7 @@
         <result column="name" property="name"/>
         <result column="type" property="type"/>
         <result column="fatherId" property="fatherId"/>
-        <collection property="subCategoryList" ofType="com.ikutarian.pojo.vo.SubCategoryVo">
+        <collection property="subCatList" ofType="com.ikutarian.pojo.vo.SubCategoryVo">
             <id column="subId" property="subId"/>
             <result column="subName" property="subName"/>
             <result column="subType" property="subType"/>

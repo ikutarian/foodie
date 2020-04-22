@@ -91,7 +91,7 @@ public class ItemController {
         return ApiResult.ok(pageGridResult);
     }
 
-    @ApiOperation(value = "搜索商品", notes = "搜索商品", httpMethod = "GET")
+    @ApiOperation(value = "根据商品名称搜索商品", notes = "根据商品名称搜索商品", httpMethod = "GET")
     @GetMapping("search")
     public ApiResult search(@ApiParam(name = "keywords", value = "关键字", required = true)
                               @RequestParam String keywords,
@@ -112,6 +112,30 @@ public class ItemController {
         }
 
         PageGridResult pageGridResult = itemService.searchItems(keywords, sort, page, pageSize);
+        return ApiResult.ok(pageGridResult);
+    }
+
+    @ApiOperation(value = "根据所属分类搜索商品", notes = "根据所属分类搜索商品", httpMethod = "GET")
+    @GetMapping("catItems")
+    public ApiResult catItems(@ApiParam(name = "catId", value = "所属分类", required = true)
+                            @RequestParam Integer catId,
+                            @ApiParam(name = "sort", value = "排序", required = true)
+                            @RequestParam String sort,
+                            @ApiParam(name = "page", value = "当前页", required = true)
+                            @RequestParam Integer page,
+                            @ApiParam(name = "pageSize", value = "每页的查询个数", required = true)
+                            @RequestParam Integer pageSize) {
+        if (catId == null) {
+            return ApiResult.error("catId不能为空");
+        }
+        if (page == null) {
+            page = PageConstants.DEFAULT_PAGE;
+        }
+        if (pageSize == null) {
+            pageSize = PageConstants.DEFAULT_PAGE_SIZE;
+        }
+
+        PageGridResult pageGridResult = itemService.searchItems(catId, sort, page, pageSize);
         return ApiResult.ok(pageGridResult);
     }
 }

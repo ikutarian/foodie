@@ -43,7 +43,12 @@ public interface ItemService extends IService<Item> {
     PageGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize);
 
     /**
-     * 搜索商品
+     * 根据商品名称搜索商品
      */
     PageGridResult searchItems(String keyword, String sort, Integer page, Integer pageSize);
+
+    /**
+     * 根据所属分类搜索商品
+     */
+    PageGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize);
 }

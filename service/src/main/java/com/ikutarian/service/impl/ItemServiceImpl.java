@@ -118,4 +118,15 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         IPage<SearchItemVo> iPage = this.getBaseMapper().searchItems(new Page<>(page, pageSize), paramsMap);
         return PageGridResult.fromIPage(iPage);
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PageGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("catId", catId);
+        paramsMap.put("sort", sort);
+
+        IPage<SearchItemVo> iPage = this.getBaseMapper().searchItemsByThirdCat(new Page<>(page, pageSize), paramsMap);
+        return PageGridResult.fromIPage(iPage);
+    }
 }

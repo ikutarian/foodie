@@ -19,5 +19,5 @@ public class CategoryVo {
     /**
      * 三级分类
      */
-    private List<SubCategoryVo> subCategoryList;
+    private List<SubCategoryVo> subCatList;
 }
