@@ -37,8 +37,7 @@ spring:
 #
 ############################################################
 mybatis-plus:
-  type-aliases-package: com.ikutarian.pojo,com.ikutarian.pojo.vo # 所有POJO类所在包路径
-  mapper-locations: classpath*:mapper/*.xml # mapper映射文件
+  mapper-locations: classpath*:mapper/*.xml # mapper映射文件的位置
   global-config:
     db-config:
       id-type: assign_id # 主键默认采用雪花算法生成

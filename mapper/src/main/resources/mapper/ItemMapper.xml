@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ikutarian.mapper.ItemMapper">
 
-    <select id="queryItemComments" parameterType="map" resultType="ItemCommentVo">
+    <select id="queryItemComments" parameterType="map" resultType="com.ikutarian.pojo.vo.ItemCommentVo">
         SELECT
             ic.comment_level AS commentLevel,
             ic.content AS content,
@@ -22,5 +22,55 @@
                 AND ic.comment_level = #{paramsMap.level}
             </if>
     </select>
+
+    <select id="searchItems" parameterType="map" resultType="com.ikutarian.pojo.vo.SearchItemVo">
+        SELECT
+            i.id AS itemId,
+            i.item_name AS itemName,
+            i.sell_counts AS sellCounts,
+            ii.url AS imgUrl,
+            tempSpec.price_discount AS price
+        FROM
+            items i
+        LEFT JOIN
+            items_img ii
+        ON
+            i.id = ii.item_id
+        LEFT JOIN
+            (
+                SELECT
+                    item_id, MIN(price_discount) AS price_discount
+                FROM
+                    items_spec
+                GROUP BY
+                    item_id
+            ) tempSpec
+        ON
+            i.id = tempSpec.item_id
+        WHERE
+            ii.is_main = 1
+            <if test="paramsMap.keyword != null and paramsMap.keyword != ''">
+                AND i.item_name LIKE CONCAT('%', #{paramsMap.keyword}, '%')
+            </if>
+            ORDER BY
+            <choose>
+                <when test="paramsMap.sort == &quot;c&quot; ">
+                    i.sell_counts DESC
+                </when>
+                <when test="paramsMap.sort == &quot;p&quot; ">
+                    tempSpec.price_discount ASC
+                </when>
+                <otherwise>
+                    i.item_name ASC
+                </otherwise>
+            </choose>
+    </select>
+    <!--
+        k:默认排序，根据name
+        c:根据销量排序
+        p:根据价格排序
+
+        &quote; 是 " 的转义
+     -->
     
 </mapper>

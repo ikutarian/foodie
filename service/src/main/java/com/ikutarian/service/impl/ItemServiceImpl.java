@@ -13,6 +13,7 @@ import com.ikutarian.pojo.ItemSpec;
 import com.ikutarian.pojo.ItemsComment;
 import com.ikutarian.pojo.vo.CommentLevelCountVo;
 import com.ikutarian.pojo.vo.ItemCommentVo;
+import com.ikutarian.pojo.vo.SearchItemVo;
 import com.ikutarian.service.ItemImgService;
 import com.ikutarian.service.ItemParamService;
 import com.ikutarian.service.ItemService;
@@ -107,4 +108,14 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         return PageGridResult.fromIPage(iPage);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PageGridResult searchItems(String keyword, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("keyword", keyword);
+        paramsMap.put("sort", sort);
+
+        IPage<SearchItemVo> iPage = this.getBaseMapper().searchItems(new Page<>(page, pageSize), paramsMap);
+        return PageGridResult.fromIPage(iPage);
+    }
 }

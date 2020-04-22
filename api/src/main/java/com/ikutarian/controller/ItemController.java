@@ -90,4 +90,28 @@ public class ItemController {
         PageGridResult pageGridResult = itemService.queryPagedComments(itemId, level, page, pageSize);
         return ApiResult.ok(pageGridResult);
     }
+
+    @ApiOperation(value = "搜索商品", notes = "搜索商品", httpMethod = "GET")
+    @GetMapping("search")
+    public ApiResult search(@ApiParam(name = "keywords", value = "关键字", required = true)
+                              @RequestParam String keywords,
+                              @ApiParam(name = "sort", value = "排序", required = true)
+                              @RequestParam String sort,
+                              @ApiParam(name = "page", value = "当前页", required = true)
+                              @RequestParam Integer page,
+                              @ApiParam(name = "pageSize", value = "每页的查询个数", required = true)
+                              @RequestParam Integer pageSize) {
+        if (StringUtils.isBlank(keywords)) {
+            return ApiResult.error("keywords不能为空");
+        }
+        if (page == null) {
+            page = PageConstants.DEFAULT_PAGE;
+        }
+        if (pageSize == null) {
+            pageSize = PageConstants.DEFAULT_PAGE_SIZE;
+        }
+
+        PageGridResult pageGridResult = itemService.searchItems(keywords, sort, page, pageSize);
+        return ApiResult.ok(pageGridResult);
+    }
 }
