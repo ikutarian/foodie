@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ikutarian.pojo.Item;
 import com.ikutarian.pojo.vo.ItemCommentVo;
 import com.ikutarian.pojo.vo.SearchItemVo;
+import com.ikutarian.pojo.vo.ShopCartVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ItemMapper extends BaseMapper<Item> {
@@ -17,4 +19,6 @@ public interface ItemMapper extends BaseMapper<Item> {
     IPage<SearchItemVo> searchItems(Page<SearchItemVo> page, @Param("paramsMap") Map<String, Object> map);
 
     IPage<SearchItemVo> searchItemsByThirdCat(Page<SearchItemVo> page, @Param("paramsMap") Map<String, Object> map);
+
+    List<ShopCartVo> queryItemsBySpecIds(@Param("paramsList") List<String> specIdsList);
 }

@@ -6,6 +6,7 @@ import com.ikutarian.pojo.ItemImg;
 import com.ikutarian.pojo.ItemParam;
 import com.ikutarian.pojo.ItemSpec;
 import com.ikutarian.pojo.vo.CommentLevelCountVo;
+import com.ikutarian.pojo.vo.ShopCartVo;
 import com.ikutarian.util.PageGridResult;
 
 import java.util.List;
@@ -51,4 +52,11 @@ public interface ItemService extends IService<Item> {
      * 根据所属分类搜索商品
      */
     PageGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize);
+
+    /**
+     * 根据规格id查询商品规格信息
+     *
+     * @param specIds 用逗号分隔的规格id列表
+     */
+    List<ShopCartVo> queryItemsBySpecIds(String specIds);
 }

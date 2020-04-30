@@ -7,6 +7,7 @@ import com.ikutarian.pojo.ItemParam;
 import com.ikutarian.pojo.ItemSpec;
 import com.ikutarian.pojo.vo.CommentLevelCountVo;
 import com.ikutarian.pojo.vo.ItemInfoVo;
+import com.ikutarian.pojo.vo.ShopCartVo;
 import com.ikutarian.service.ItemService;
 import com.ikutarian.util.ApiResult;
 import com.ikutarian.util.PageGridResult;
@@ -137,5 +138,17 @@ public class ItemController {
 
         PageGridResult pageGridResult = itemService.searchItems(catId, sort, page, pageSize);
         return ApiResult.ok(pageGridResult);
+    }
+
+    @ApiOperation(value = "根据规格id查询商品规格信息", notes = "根据规格id查询商品规格信息", httpMethod = "GET")
+    @GetMapping("refresh")
+    public ApiResult refresh(@ApiParam(name = "itemSpecIds", value = "拼接的规格id列表", required = true, example = "1001,1003,1005")
+                             @RequestParam String itemSpecIds) {
+        if (StringUtils.isBlank(itemSpecIds)) {
+            return ApiResult.ok();
+        }
+
+        List<ShopCartVo> voList = itemService.queryItemsBySpecIds(itemSpecIds);
+        return ApiResult.ok(voList);
     }
 }

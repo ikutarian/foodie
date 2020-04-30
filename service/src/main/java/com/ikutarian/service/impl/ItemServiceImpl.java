@@ -14,6 +14,7 @@ import com.ikutarian.pojo.ItemsComment;
 import com.ikutarian.pojo.vo.CommentLevelCountVo;
 import com.ikutarian.pojo.vo.ItemCommentVo;
 import com.ikutarian.pojo.vo.SearchItemVo;
+import com.ikutarian.pojo.vo.ShopCartVo;
 import com.ikutarian.service.ItemImgService;
 import com.ikutarian.service.ItemParamService;
 import com.ikutarian.service.ItemService;
@@ -24,7 +25,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +103,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public PageGridResult queryPagedComments(String itemId, Integer level,
-                                                  Integer page, Integer pageSize) {
+                                             Integer page, Integer pageSize) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("itemId", itemId);
         paramsMap.put("level", level);
@@ -128,5 +132,12 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
 
         IPage<SearchItemVo> iPage = this.getBaseMapper().searchItemsByThirdCat(new Page<>(page, pageSize), paramsMap);
         return PageGridResult.fromIPage(iPage);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ShopCartVo> queryItemsBySpecIds(String specIds) {
+        List<String> specIdsList = Arrays.asList(StringUtils.split(specIds, ","));
+        return this.getBaseMapper().queryItemsBySpecIds(specIdsList);
     }
 }

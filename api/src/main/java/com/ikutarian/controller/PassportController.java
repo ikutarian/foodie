@@ -69,6 +69,9 @@ public class PassportController {
         User user = userService.createUser(userBo);
         CookieUtils.setCookie(request, response, "user", JsonUtils.objToJson(user), true);
 
+        // TODO 生成用户的Token，存入Redis
+        // TODO 同步购物车数据
+
         return ApiResult.ok();
     }
 
@@ -89,6 +92,9 @@ public class PassportController {
             return ApiResult.error("用户名或密码不正确");
         }
         CookieUtils.setCookie(request, response, "user", JsonUtils.objToJson(user), true);
+
+        // TODO 生成用户的Token，存入Redis
+        // TODO 同步购物车数据
 
         return ApiResult.ok(user);
     }
